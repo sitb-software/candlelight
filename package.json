@@ -1,13 +1,32 @@
 {
-  "name": "nite",
-  "version": "1.0.0",
-  "description": "NodeJS Web Framework.",
+  "name": "candlelight",
+  "version": "0.0.1",
+  "description": "A NodeJS Web Framework",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "prepublish": "npm run build"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sitb-software/candlelight.git"
+  },
+  "keywords": [
+    "nodejs",
+    "web",
+    "restful"
+  ],
+  "author": "Sean",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sitb-software/candlelight/issues"
+  },
+  "homepage": "https://github.com/sitb-software/candlelight#readme",
+  "files": [
+    "**/*.d.ts",
+    "**/*.js"
+  ],
   "dependencies": {
+    "path-to-regexp": "^1.5.3"
   }
 }
