@@ -1,16 +1,16 @@
-# Nite
+# Candlelight
 A NodeJs Web Framework
 
 ## Installation
 
-  	npm install nite --save
+  	npm install candlelight --save
   	
 ## Usage
 	
-    import Application from 'nite/Application';
-    import RestController from 'nite/annotation/RestController';
-    import RequestMapping from 'nite/annotation/RequestMapping';
-    import HttpMethod from 'nite/http/HttpMethod';
+    import Application from 'candlelight/Application';
+    import RestController from 'candlelight/annotation/RestController';
+    import RequestMapping from 'candlelight/annotation/RequestMapping';
+    import HttpMethod from 'candlelight/http/HttpMethod';
 
     @RestController
     class ApplicationController{
