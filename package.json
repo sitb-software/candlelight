@@ -1,8 +1,8 @@
 {
   "name": "candlelight",
-  "version": "0.0.1",
+  "version": "0.0.1-alpha",
   "description": "A NodeJS Web Framework",
-  "main": "index.js",
+  "main": "lib/Application.js",
   "scripts": {
     "build": "tsc",
     "prepublish": "npm run build"
@@ -22,10 +22,6 @@
     "url": "https://github.com/sitb-software/candlelight/issues"
   },
   "homepage": "https://github.com/sitb-software/candlelight#readme",
-  "files": [
-    "**/*.d.ts",
-    "**/*.js"
-  ],
   "dependencies": {
     "path-to-regexp": "^1.5.3"
   }
