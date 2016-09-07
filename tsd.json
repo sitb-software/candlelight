@@ -5,5 +5,11 @@
   "path": "typings",
   "bundle": "typings/tsd.d.ts",
   "installed": {
+    "node/node.d.ts": {
+      "commit": "938158616b798dee483b64f13dcfc56894940e03"
+    },
+    "path-to-regexp/path-to-regexp.d.ts": {
+      "commit": "938158616b798dee483b64f13dcfc56894940e03"
+    }
   }
 }
