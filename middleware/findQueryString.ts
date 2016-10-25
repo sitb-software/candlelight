@@ -1,6 +1,6 @@
-import {parse} from 'url';
+import { parse } from 'url';
 import Context from '../http/Context';
-import HttpUtils from '../utils/HttpUtils';
+
 /**
  * 解析URL中的参数
  * @author 田尘殇Sean(sean.snow@live.com)
@@ -8,9 +8,9 @@ import HttpUtils from '../utils/HttpUtils';
  */
 export default (ctx: Context, next) => {
   const req = ctx.request;
-  let queryString = parse(req.url).query;
+  let queryString = parse(req.url, true).query;
   if (queryString) {
-    ctx.queryString = HttpUtils.queryString2Obj(queryString);
+    ctx.query = queryString;
   }
   next();
 };
