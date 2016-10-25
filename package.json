@@ -1,6 +1,6 @@
 {
   "name": "candlelight",
-  "version": "0.0.6-alpha",
+  "version": "0.0.8-alpha",
   "description": "A NodeJS Web Framework",
   "main": "lib/Application.js",
   "scripts": {
@@ -23,6 +23,8 @@
   },
   "homepage": "https://github.com/sitb-software/candlelight#readme",
   "dependencies": {
-    "path-to-regexp": "^1.5.3"
+    "content-type": "^1.0.2",
+    "path-to-regexp": "^1.5.3",
+    "raw-body": "^2.1.7"
   }
 }
