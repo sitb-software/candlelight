@@ -6,6 +6,7 @@ import handleRequest from './http/handleRequest';
 import routerFactory from './http/routerFactory';
 import findRequestRoute from './http/findRequestRoute';
 import findQueryString from './middleware/findQueryString';
+import findBodyParams from './middleware/findBodyParams';
 import parsePathVariable from './middleware/parsePathVariable';
 import handleAction from './middleware/handleAction';
 
@@ -28,6 +29,7 @@ class Application {
   constructor() {
     this.middleware = [];
     this.middleware.push(findQueryString);
+    this.middleware.push(findBodyParams);
     this.middleware.push(parsePathVariable);
     this.middleware.push(handleAction);
   }
