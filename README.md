@@ -5,7 +5,7 @@ A NodeJs Web Framework
 
   	npm install candlelight --save
   	
-## Usage
+## Usage with Restful
 	
     import Application from 'candlelight/Application';
     import RestController from 'candlelight/annotation/RestController';
@@ -29,3 +29,8 @@ A NodeJs Web Framework
             ApplicationController
         }
     });
+
+## Middleware
+
+    const app = new Application();
+    app.
