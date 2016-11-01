@@ -1,4 +1,7 @@
-import {IncomingMessage, ServerResponse} from 'http';
+import {
+  IncomingMessage,
+  ServerResponse
+} from 'http';
 import Route from './Route';
 
 /**
@@ -13,9 +16,10 @@ class Context {
   private _session = {};
   private _headers = {};
   private _cookies = [];
-  private _queryString: Object = {};
+  private _query: Object = {};
+  private _originalBody: string;
+  private _body: Object = {};
   private _pathVariable: Object = {};
-  private _bodyParams: Object = {};
   private _remoteAddr: string;
   private _remoteHost: string;
 
@@ -74,14 +78,21 @@ class Context {
     this._cookies = value;
   }
 
-  get queryString(): Object {
-    return this._queryString;
+  get query(): Object {
+    return this._query;
   }
 
-  set queryString(value: Object) {
-    this._queryString = value;
+  set query(value: Object) {
+    this._query = value;
   }
 
+  get body(): Object {
+    return this._body;
+  }
+
+  set body(value: Object) {
+    this._body = value;
+  }
 
   get pathVariable(): Object {
     return this._pathVariable;
@@ -89,14 +100,6 @@ class Context {
 
   set pathVariable(value: Object) {
     this._pathVariable = value;
-  }
-
-  get bodyParams(): Object {
-    return this._bodyParams;
-  }
-
-  set bodyParams(value: Object) {
-    this._bodyParams = value;
   }
 
   get remoteAddr(): string {
@@ -113,6 +116,14 @@ class Context {
 
   set remoteHost(value: string) {
     this._remoteHost = value;
+  }
+
+  get originalBody(): string {
+    return this._originalBody;
+  }
+
+  set originalBody(value: string) {
+    this._originalBody = value;
   }
 }
 
