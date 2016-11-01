@@ -24,7 +24,9 @@ export default (ctx: Context, next) => {
       let body = null;
       if (contentType.type === 'application/x-www-form-urlencoded') {
         body = parse(`/?${res}`, true).query;
+        ctx.originalBody = decodeURI(res);
       } else if (contentType.type.includes('json')) {
+        ctx.originalBody = res;
         body = JSON.parse(res);
       }
       ctx.body = body;
