@@ -3,7 +3,7 @@
     "experimentalDecorators": true,
     "declaration": true,
     "sourceMap": true,
-    "module": "esnext",
+    "module": "commonjs",
     "target": "es2017"
   },
   "exclude": [
