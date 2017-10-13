@@ -38,7 +38,7 @@ class Application {
    * 添加一个中间件
    * @param middleware 请求处理中间件
    */
-  use(middleware: (req: Context, next) => void): void {
+  use(middleware: (req: Context, next: (req: Context) => void) => void): void {
     this.middleware.push(middleware);
   }
 
@@ -49,7 +49,7 @@ class Application {
    */
   run({controllers = {}, config = {server: {}}} = {}): void {
     const routes: Array<Route> = routerFactory(controllers);
-    const app = http.createServer((request, response)=> {
+    const app = http.createServer((request, response) => {
       const route = findRequestRoute(request, routes);
       if (route) {
         console.log('find action route.', request.method, request.url);
@@ -60,7 +60,10 @@ class Application {
       }
     });
 
-    const server = Object.assign({}, DEFAULT_CONFIG.server, config.server || {});
+    const server = {
+      ...DEFAULT_CONFIG.server,
+      ...config.server
+    };
     console.log(`server start on port [${server.port}]`);
     app.listen(server.port);
   }
