@@ -34,3 +34,18 @@ A NodeJs Web Framework
 
     const app = new Application();
     app.
+
+
+## Request Params
+
+### path variable 
+
+```js
+class Controller{
+    
+    @RequestMapping({path: '/:id'})
+    index({pathVariable}){
+        const {id} = pathVariable;
+    }
+}
+```

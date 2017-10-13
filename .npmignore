@@ -1,7 +1,8 @@
+*.ts
+*.map
 .idea
-node_modules
-typings
 .editorconfig
 .gitignore
-tsd.json
 tsconfig.json
+node_modules
+!*.d.ts

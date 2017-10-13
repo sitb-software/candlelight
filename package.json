@@ -4,8 +4,11 @@
   "description": "A NodeJS Web Framework",
   "main": "lib/Application.js",
   "scripts": {
+    "start": "npm run build && npm run watch",
     "build": "tsc",
-    "prepublish": "npm run build"
+    "deploy": "tsc -d",
+    "watch": "tsc -w",
+    "clean": "rm -rf *.d.ts *.js *.js.map **/*.d.ts **/*.js **/*.js.map"
   },
   "repository": {
     "type": "git",
@@ -23,8 +26,12 @@
   },
   "homepage": "https://github.com/sitb-software/candlelight#readme",
   "dependencies": {
-    "content-type": "^1.0.2",
-    "path-to-regexp": "^1.5.3",
-    "raw-body": "^2.1.7"
+    "content-type": "^1.0.4",
+    "path-to-regexp": "^2.0.0",
+    "raw-body": "^2.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.34",
+    "typescript": "^2.5.3"
   }
 }
