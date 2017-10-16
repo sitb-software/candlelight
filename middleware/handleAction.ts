@@ -5,8 +5,8 @@ function response({context, result}) {
     context.response.writeHead(200, {
       'Content-Type': 'application/json'
     });
-    context.response.end(typeof result === 'string' ? result : JSON.stringify(result));
   }
+  context.response.end(typeof result === 'string' ? result : JSON.stringify(result));
 }
 
 /**
