@@ -1,5 +1,4 @@
 *.ts
-*.map
 .idea
 .editorconfig
 .gitignore
