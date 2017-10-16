@@ -1,6 +1,6 @@
 import Context from '../http/Context';
 import * as contentTypeUtils from 'content-type';
-import { parse } from 'url';
+import {parse} from 'url';
 
 const getRawBody = require('raw-body');
 
@@ -11,12 +11,18 @@ const getRawBody = require('raw-body');
  */
 export default (ctx: Context, next) => {
   const req = ctx.request;
+
+  if (req.method === 'GET') {
+    next();
+    return;
+  }
+
   const contentType = contentTypeUtils.parse(req);
 
   getRawBody(req, {
     length: req.headers['content-length'],
     encoding: contentType.parameters.charset || 'utf-8'
-  }, (err, res)=> {
+  }, (err, res) => {
     if (err) {
       console.error('解析body失败', err);
     }
