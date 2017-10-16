@@ -7,7 +7,7 @@ import routerFactory from './http/routerFactory';
 import findRequestRoute from './http/findRequestRoute';
 import findQueryString from './middleware/findQueryString';
 import findBodyParams from './middleware/findBodyParams';
-import parsePathVariable from './middleware/parsePathVariable';
+import findPathVariable from './middleware/findPathVariable';
 import handleAction from './middleware/handleAction';
 
 
@@ -30,7 +30,7 @@ class Application {
     this.middleware = [];
     this.middleware.push(findQueryString);
     this.middleware.push(findBodyParams);
-    this.middleware.push(parsePathVariable);
+    this.middleware.push(findPathVariable);
     this.middleware.push(handleAction);
   }
 
@@ -55,7 +55,7 @@ class Application {
         console.log('find action route.', request.method, request.url);
         handleRequest({request, response, route, middlewareStack: [].concat(this.middleware)});
       } else {
-        console.log('route not found.');
+        console.log(`route not found. method=${request.method}, url=${request.url}`);
         handle404(request, response);
       }
     });
