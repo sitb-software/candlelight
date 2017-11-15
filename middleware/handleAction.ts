@@ -1,4 +1,4 @@
-import Context from '../http/Context';
+import Context from '../modals/Context';
 
 function response({context, result}) {
   if (context.route.isRestful) {

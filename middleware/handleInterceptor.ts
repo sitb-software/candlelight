@@ -1,4 +1,4 @@
-import Context from '../http/Context';
+import Context from '../modals/Context';
 
 /**
  * @author 田尘殇Sean(sean.snow@live.com)

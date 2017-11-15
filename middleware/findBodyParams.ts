@@ -1,4 +1,4 @@
-import Context from '../http/Context';
+import Context from '../modals/Context';
 import * as contentTypeUtils from 'content-type';
 import {parse} from 'url';
 

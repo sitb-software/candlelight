@@ -1,5 +1,5 @@
 import {parse} from 'url';
-import Context from '../http/Context';
+import Context from '../modals/Context';
 import HttpUtils from '../utils/HttpUtils';
 /**
  * @author 田尘殇Sean(sean.snow@live.com)

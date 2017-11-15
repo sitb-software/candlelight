@@ -1,5 +1,5 @@
 import { parse } from 'url';
-import Context from '../http/Context';
+import Context from '../modals/Context';
 
 /**
  * 解析URL中的参数
