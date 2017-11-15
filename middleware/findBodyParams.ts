@@ -1,6 +1,8 @@
 import Context from '../modals/Context';
 import * as contentTypeUtils from 'content-type';
-import {parse} from 'url';
+import { parse } from 'url';
+import { DEFAULT_CHARSET } from '../core/Constants';
+import { HttpMessageNotReadableException } from '../error/HttpMessageNotReadableException';
 
 const getRawBody = require('raw-body');
 
@@ -17,14 +19,26 @@ export default (ctx: Context, next) => {
     return;
   }
 
-  const contentType = contentTypeUtils.parse(req);
+  let contentType = {
+    type: '',
+    parameters: {
+      charset: DEFAULT_CHARSET
+    }
+  };
+
+  try {
+    contentType = contentTypeUtils.parse(req);
+  } catch (e) {
+    console.log(`解析content-type失败: ${e.message}`);
+  }
 
   getRawBody(req, {
     length: req.headers['content-length'],
-    encoding: contentType.parameters.charset || 'utf-8'
+    encoding: contentType.parameters.charset || DEFAULT_CHARSET
   }, (err, res) => {
     if (err) {
       console.error('解析body失败', err);
+      throw new Error(err);
     }
     if (res) {
       let body = null;
@@ -33,7 +47,12 @@ export default (ctx: Context, next) => {
         ctx.originalBody = decodeURI(res);
       } else if (contentType.type.includes('json')) {
         ctx.originalBody = res;
-        body = JSON.parse(res);
+        try {
+          body = JSON.parse(res);
+        } catch (e) {
+          console.error(`解析JSON格式body失败 -> ${e.message}`, e);
+          throw new HttpMessageNotReadableException(e.message);
+        }
       }
       ctx.body = body;
     }
