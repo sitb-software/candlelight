@@ -5,8 +5,14 @@ function response({context, result}) {
     context.response.writeHead(200, {
       'Content-Type': 'application/json'
     });
+    context.response.end(typeof result === 'string' ? result : JSON.stringify(result));
+  } else if (context.template === 'react') {
+    const {type, props, children} = result;
+    const React = require('react');
+    const ReactDOMServer = require('react-dom/server');
+    const html = ReactDOMServer.renderToString(React.createElement(type, props, children));
+    context.response.end(html);
   }
-  context.response.end(typeof result === 'string' ? result : JSON.stringify(result));
 }
 
 /**
