@@ -7,3 +7,12 @@ export default (target) => {
   target.prototype.isRestful = false;
 }
 
+/**
+ * rest controller
+ * @param target
+ * @constructor
+ */
+export const RestController = (target) => {
+  target.isController = true;
+  target.prototype.isRestful = true;
+};
