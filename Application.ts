@@ -10,11 +10,19 @@ import findBodyParams from './middleware/findBodyParams';
 import findPathVariable from './middleware/findPathVariable';
 import handleAction from './middleware/handleAction';
 
+export interface Config {
+  controllers?: Object,
+  server?: {
+    port?: number
+  },
+  template?: 'react'
+}
 
-const DEFAULT_CONFIG = {
+const DEFAULT_CONFIG: Config = {
   server: {
     port: 7000
-  }
+  },
+  template: 'react'
 };
 
 /**
@@ -45,27 +53,34 @@ class Application {
   /**
    * 运行程序
    * @param controllers Web控制器
-   * @param config 配置参数
+   * @param server 服务允许参数
+   * @param template view 使用的模板技术
    */
-  run({controllers = {}, config = {server: {}}} = {}): void {
+  run({controllers = {}, server, template}: Config): void {
     const routes: Array<Route> = routerFactory(controllers);
     const app = http.createServer((request, response) => {
       const route = findRequestRoute(request, routes);
       if (route) {
         console.log('find action route.', request.method, request.url);
-        handleRequest({request, response, route, middlewareStack: [].concat(this.middleware)});
+        handleRequest({
+          request,
+          response,
+          route,
+          template,
+          middlewareStack: [].concat(this.middleware)
+        });
       } else {
         console.log(`route not found. method=${request.method}, url=${request.url}`);
         handle404(request, response);
       }
     });
 
-    const server = {
+    const serverArgs = {
       ...DEFAULT_CONFIG.server,
-      ...config.server
+      ...server
     };
-    console.log(`server start on port [${server.port}]`);
-    app.listen(server.port);
+    console.log(`server start on port [${serverArgs.port}]`);
+    app.listen(serverArgs.port);
   }
 
 }
