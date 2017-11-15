@@ -1,4 +1,4 @@
-import Route from './Route';
+import Route from '../modals/Route';
 
 /**
  * 解析控制器，得到路由信息
