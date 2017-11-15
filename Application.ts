@@ -1,9 +1,9 @@
 import * as http from 'http';
-import Route from './http/Route';
-import Context from './http/Context';
+import Route from './modals/Route';
+import Context from './modals/Context';
 import handle404 from './http/handle404';
 import handleRequest from './http/handleRequest';
-import routerFactory from './http/routerFactory';
+import routerFactory from './core/routerFactory';
 import findRequestRoute from './http/findRequestRoute';
 import findQueryString from './middleware/findQueryString';
 import findBodyParams from './middleware/findBodyParams';
