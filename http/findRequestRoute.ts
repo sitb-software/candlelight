@@ -1,6 +1,6 @@
 import {IncomingMessage} from 'http';
 import {parse} from 'url';
-import Route from './Route';
+import Route from '../modals/Route';
 import HttpUtils from '../utils/HttpUtils';
 import HttpMethod from './HttpMethod';
 
