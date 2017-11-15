@@ -13,10 +13,11 @@ interface Context {
   query?: Object,
   originalBody?: String,
   body?: Object,
-  pathVariable?: Object,
+  pathVariable?: any,
   remoteAddress?: String,
   remoteHost?: String,
-  route?: Route
+  route?: Route,
+  template?: string
 }
 
 export default Context;
