@@ -10,13 +10,13 @@ import routerFactory from './core/routerFactory';
 
 import handle404 from './http/handle404';
 import handleRequest from './http/handleRequest';
+import handleException from './http/handleException';
 import findRequestRoute from './http/findRequestRoute';
 
 import findQueryString from './middleware/findQueryString';
 import findBodyParams from './middleware/findBodyParams';
 import findPathVariable from './middleware/findPathVariable';
 import handleAction from './middleware/handleAction';
-import handleException from './http/handleException';
 import {IncomingMessage, ServerResponse} from 'http';
 
 export interface Config {
