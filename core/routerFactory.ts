@@ -17,12 +17,13 @@ export default (controllers): Array<Route> => {
     const {isRestful, handlers, path = ''} = Controller.prototype;
     const instance = new Controller();
     Object.keys(handlers).forEach(k => {
-      const handler = handlers[k];
+      const {path: appPath, method, parameterTypes} = handlers[k];
       routes.push({
-        uri: `${path}${handler.path}`,
-        method: handler.method,
+        uri: `${path}${appPath}`,
+        method: method,
+        parameterTypes,
         isRestful,
-        handler: instance[k]
+        handler: instance[k],
       });
     });
   });

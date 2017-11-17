@@ -11,13 +11,14 @@ export default function RequestMapping({path, method = HttpMethod.GET}): Functio
     if (!target.handlers) {
       target.handlers = {};
     }
+    if (!target.handlers[propertyKey]) {
+      target.handlers[propertyKey] = {};
+    }
 
     if (propertyKey) {
       console.log(`注解在方法[${propertyKey}]上`);
-      target.handlers[propertyKey] = {
-        path,
-        method
-      };
+      target.handlers[propertyKey].path = path;
+      target.handlers[propertyKey].method = method;
     } else {
       target.prototype.path = path;
     }

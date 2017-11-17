@@ -1,4 +1,5 @@
 import Context from '../modals/Context';
+import ParameterType, { ParameterFrom } from "../modals/ParameterType";
 
 function response({context, result}) {
   if (context.route.isRestful) {
@@ -20,7 +21,20 @@ function response({context, result}) {
  * @date 16/9/7
  */
 export default (ctx: Context) => {
-  const res = ctx.route.handler(ctx);
+  const {handler, parameterTypes} = ctx.route;
+  const parameters = parameterTypes ? Object.keys(parameterTypes).sort().map(idx => {
+    const {type, key} = parameterTypes[idx];
+    switch (type) {
+      case ParameterFrom.BODY:
+        return ctx.body;
+      case ParameterFrom.PATH:
+        return (ctx.query || {})[key];
+      default:
+        return ctx.query[key] || (ctx.body || {})[key]
+    }
+  }) : [];
+  parameters.push(ctx);
+  const res = handler(...parameters);
   if (res instanceof Promise) {
     res.then(result => {
       response({

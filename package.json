@@ -1,6 +1,6 @@
 {
   "name": "candlelight",
-  "version": "1.0.0-alpha.16",
+  "version": "1.0.0-alpha.23",
   "description": "A NodeJS Web Framework",
   "main": "lib/Application.js",
   "scripts": {
