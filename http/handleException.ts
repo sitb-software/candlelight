@@ -1,5 +1,6 @@
 import { ServerResponse } from 'http';
 import Route from '../modals/Route';
+import { ArgumentNotValidException } from '../error/ArgumentNotValidException';
 
 /**
  * 处理系统发生的异常信息
@@ -10,12 +11,21 @@ import Route from '../modals/Route';
  */
 export default (req, res: ServerResponse, route: Route, e) => {
   console.log('发生异常，默认异常处理');
+  let message = e.message;
+
+  if (e instanceof ArgumentNotValidException) {
+    message = {
+      key: e.key,
+      message: e.message
+    };
+  }
+
   res.writeHead(500, {
     'Content-Type': 'application/json'
   });
   res.end(JSON.stringify({
     method: route.method.toString(),
     uri: route.uri,
-    message: e.message
+    message
   }));
 }

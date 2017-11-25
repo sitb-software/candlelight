@@ -1,6 +1,6 @@
 {
   "name": "candlelight",
-  "version": "1.0.0-alpha.23",
+  "version": "1.0.0-alpha.24",
   "description": "A NodeJS Web Framework",
   "main": "lib/Application.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "deploy": "tsc -d",
     "watch": "tsc -w",
     "clear": "rm -rf *.d.ts *.js *.js.map **/*.d.ts **/*.js **/*.js.map",
-    "prepare": "npm run clear && npm run build"
+    "prepare": "npm run clear && npm run deploy"
   },
   "repository": {
     "type": "git",

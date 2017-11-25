@@ -3,7 +3,10 @@
     "module": "commonjs",
     "target": "esnext",
     "experimentalDecorators": true,
-    "declaration": true
+    "lib": [
+      "es2016.array.include",
+      "esnext"
+    ]
   },
   "exclude": [
     "node_modules"
