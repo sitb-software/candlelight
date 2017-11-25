@@ -1,4 +1,4 @@
-import { Rule } from '../modals/ParamsValid';
+import { Rule, Type } from '../modals/ParamsValid';
 import * as validator from './validators';
 import { ArgumentNotValidException } from '../error/ArgumentNotValidException';
 
@@ -12,7 +12,8 @@ export default function (source: any, rules: Array<Rule>) {
       rule.validator(source[rule.key], source, rule);
     } else {
       try {
-        validator[rule.type] && validator[rule.type](source[rule.key], source, rule);
+        const type = Type[(rule.type || Type.string)];
+        validator[type] && validator[type](source[rule.key], source, rule);
       } catch (e) {
         throw new ArgumentNotValidException({key: rule.key, message: e.message});
       }
