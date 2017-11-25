@@ -87,28 +87,27 @@ class Application {
    *
    */
   start() {
-    if (process.env.DEBUG) {
-      console.log('application run DEBUG env.');
-      this.createServer();
-    } else {
-      if (cluster.isMaster) {
-        console.log(`Master ${process.pid} is running`);
+    if (cluster.isMaster) {
+      console.log(`Master ${process.pid} is running`);
+      if (process.env.DEBUG) {
+        cluster.fork();
+      } else {
         os.cpus().forEach(() => {
           cluster.fork();
         });
-
-        cluster.on('exit', (worker) => {
-          console.log(`worker ${worker.process.pid} died`);
-        });
-
-        cluster.on('disconnect', (worker) => {
-          console.log(`worker ${worker.process.pid} disconnect!`);
-          cluster.fork();
-        });
-      } else {
-        this.createServer();
-        console.log(`Worker ${process.pid} started`);
       }
+
+      cluster.on('exit', (worker) => {
+        console.log(`worker ${worker.process.pid} died`);
+      });
+
+      cluster.on('disconnect', (worker) => {
+        console.log(`worker ${worker.process.pid} disconnect!`);
+        cluster.fork();
+      });
+    } else {
+      this.createServer();
+      console.log(`Worker ${process.pid} started`);
     }
   }
 
@@ -142,15 +141,13 @@ class Application {
         // But don't keep the process open just for that!
         killtimer.unref();
 
-        if (!process.env.DEBUG) {
-          // stop taking new requests.
-          this.server.close();
+        // stop taking new requests.
+        this.server.close();
 
-          // Let the master know we're dead.  This will trigger a
-          // 'disconnect' in the cluster master, and then it will fork
-          // a new worker.
-          cluster.worker.disconnect();
-        }
+        // Let the master know we're dead.  This will trigger a
+        // 'disconnect' in the cluster master, and then it will fork
+        // a new worker.
+        cluster.worker.disconnect();
 
         if (this.onException) {
           this.onException(request, response, route, err);
