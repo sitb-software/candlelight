@@ -24,7 +24,7 @@ export enum Type {
  * @param value 当前值
  * @param data 所有数据
  */
-export type Validator = (value, source, rule: Rule) => boolean;
+export type Validator = (value: any, source: any, rule: Rule) => boolean;
 
 export interface Rule {
   key: string
