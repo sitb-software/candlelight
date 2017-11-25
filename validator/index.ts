@@ -1,5 +1,6 @@
 import { Rule } from '../modals/ParamsValid';
 import * as validator from './validators';
+import { ArgumentNotValidException } from '../error/ArgumentNotValidException';
 
 /**
  * 参数校验
@@ -10,7 +11,11 @@ export default function (source: any, rules: Array<Rule>) {
     if (rule.validator) {
       rule.validator(source[rule.key], source, rule);
     } else {
-      validator[rule.type] && validator[rule.type](source[rule.key], source, rule);
+      try {
+        validator[rule.type] && validator[rule.type](source[rule.key], source, rule);
+      } catch (e) {
+        throw new ArgumentNotValidException({key: rule.key, message: e.message});
+      }
     }
   });
 }
