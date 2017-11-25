@@ -23,9 +23,10 @@ function response({context, result}) {
 export default (ctx: Context) => {
   const {handler, parameterTypes} = ctx.route;
   const parameters = parameterTypes ? Object.keys(parameterTypes).sort().map(idx => {
-    const {type, key} = parameterTypes[idx];
+    const {type, key, valid} = parameterTypes[idx];
     switch (type) {
       case ParameterFrom.BODY:
+        valid(ctx.body);
         return ctx.body;
       case ParameterFrom.PATH:
         return (ctx.query || {})[key];
