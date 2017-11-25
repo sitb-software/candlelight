@@ -17,7 +17,7 @@ import findQueryString from './middleware/findQueryString';
 import findBodyParams from './middleware/findBodyParams';
 import findPathVariable from './middleware/findPathVariable';
 import handleAction from './middleware/handleAction';
-import {IncomingMessage, ServerResponse} from 'http';
+import { IncomingMessage, ServerResponse } from 'http';
 
 export interface Config {
   controllers?: Object;
@@ -87,23 +87,28 @@ class Application {
    *
    */
   start() {
-    if (cluster.isMaster) {
-      console.log(`Master ${process.pid} is running`);
-      os.cpus().forEach(() => {
-        cluster.fork();
-      });
-
-      cluster.on('exit', (worker) => {
-        console.log(`worker ${worker.process.pid} died`);
-      });
-
-      cluster.on('disconnect', (worker) => {
-        console.log(`worker ${worker.process.pid} disconnect!`);
-        cluster.fork();
-      });
-    } else {
+    if (process.env.DEBUG) {
+      console.log('application run DEBUG env.');
       this.createServer();
-      console.log(`Worker ${process.pid} started`);
+    } else {
+      if (cluster.isMaster) {
+        console.log(`Master ${process.pid} is running`);
+        os.cpus().forEach(() => {
+          cluster.fork();
+        });
+
+        cluster.on('exit', (worker) => {
+          console.log(`worker ${worker.process.pid} died`);
+        });
+
+        cluster.on('disconnect', (worker) => {
+          console.log(`worker ${worker.process.pid} disconnect!`);
+          cluster.fork();
+        });
+      } else {
+        this.createServer();
+        console.log(`Worker ${process.pid} started`);
+      }
     }
   }
 
@@ -124,7 +129,7 @@ class Application {
     console.log('find action route.', request.method, request.url);
     const requestDomain = domain.create();
     requestDomain.on('error', err => {
-      console.error(`error ${err.stack}`);
+      console.error(err.message, err);
       // Note: We're in dangerous territory!
       // By definition, something unexpected occurred,
       // which we probably didn't want.
@@ -137,13 +142,15 @@ class Application {
         // But don't keep the process open just for that!
         killtimer.unref();
 
-        // stop taking new requests.
-        this.server.close();
+        if (!process.env.DEBUG) {
+          // stop taking new requests.
+          this.server.close();
 
-        // Let the master know we're dead.  This will trigger a
-        // 'disconnect' in the cluster master, and then it will fork
-        // a new worker.
-        cluster.worker.disconnect();
+          // Let the master know we're dead.  This will trigger a
+          // 'disconnect' in the cluster master, and then it will fork
+          // a new worker.
+          cluster.worker.disconnect();
+        }
 
         if (this.onException) {
           this.onException(request, response, route, err);
