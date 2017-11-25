@@ -12,11 +12,17 @@ export enum ParameterFrom {
 export default interface ParameterType {
   type?: ParameterFrom
   /**
-   *
+   * 参数是否是必须的
    */
   required?: boolean
   /**
    * 参数key
    */
-  key?: string
+  key?: string,
+
+  /**
+   * 参数校验函数
+   * @param source 元数据
+   */
+  valid?: (source: any) => void
 }
