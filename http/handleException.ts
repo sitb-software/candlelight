@@ -1,6 +1,7 @@
 import { ServerResponse } from 'http';
 import Route from '../modals/Route';
 import { ArgumentNotValidException } from '../error/ArgumentNotValidException';
+import HttpMethod from './HttpMethod';
 
 /**
  * 处理系统发生的异常信息
@@ -24,7 +25,7 @@ export default (req, res: ServerResponse, route: Route, e) => {
     'Content-Type': 'application/json'
   });
   res.end(JSON.stringify({
-    method: route.method.toString(),
+    method: HttpMethod[route.method],
     uri: route.uri,
     message
   }));
