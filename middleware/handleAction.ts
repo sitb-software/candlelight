@@ -26,7 +26,7 @@ export default (ctx: Context) => {
     const {type, key, valid} = parameterTypes[idx];
     switch (type) {
       case ParameterFrom.BODY:
-        valid(ctx.body);
+        valid && valid(ctx.body);
         return ctx.body;
       case ParameterFrom.PATH:
         return (ctx.query || {})[key];
